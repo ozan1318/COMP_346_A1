@@ -315,9 +315,13 @@ public class Server extends Thread {
     	
     	/* Implement the code for the run method */
 
-        while (true){
-         processTransactions(trans);
+        while (!objNetwork.getNetworkStatus().equals("active"))
+        {
+            Thread.yield();
         }
+
+        processTransactions(transaction);
+        objNetwork.disconnect(objNetwork.getServerIP());
         /* serverEndTime = System.currentTimeMillis();
         System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds"); */
            

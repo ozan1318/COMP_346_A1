@@ -315,9 +315,9 @@ public class Server extends Thread {
     	
     	/* Implement the code for the run method */
 
-        while (true){}
-
-
+        while (true){
+         processTransactions(trans);
+        }
         /* serverEndTime = System.currentTimeMillis();
         System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds"); */
            

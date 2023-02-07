@@ -310,20 +310,25 @@ public class Server extends Thread {
     public void run()
     {   Transactions trans = new Transactions();
     	long serverStartTime = System.currentTimeMillis(), serverEndTime;
-
+    	
     	System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
     	
     	/* Implement the code for the run method */
-
-        while (!objNetwork.getNetworkStatus().equals("active"))
+    	
+    	/*
+    	while (!objNetwork.getNetworkStatus().equals("active"))
         {
             Thread.yield();
         }
+    	*/
 
         processTransactions(transaction);
-        objNetwork.disconnect(objNetwork.getServerIP());
-        /* serverEndTime = System.currentTimeMillis();
-        System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds"); */
+        
+        objNetwork.setServerConnectionStatus("disconnected");
+        serverEndTime = System.currentTimeMillis();
+        System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds"); 
+       // objNetwork.disconnect(objNetwork.getServerIP());
+        objNetwork.setServerConnectionStatus("disconnected");
            
     }
 }

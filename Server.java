@@ -1,4 +1,3 @@
-
 import java.time.ZonedDateTime;
 import java.util.Scanner;
 import java.io.FileInputStream;
@@ -193,8 +192,14 @@ public class Server extends Thread {
          /* Process the accounts until the client disconnects */
          while ((!objNetwork.getClientConnectionStatus().equals("disconnected")))
          { 
-        	 while( (objNetwork.getInBufferStatus().equals("empty")))
-			 Thread.yield();/* Alternatively, busy-wait until the network input buffer is available */
+        	 while((objNetwork.getInBufferStatus().equals("empty")))
+        	 {
+        		 if(objNetwork.getClientConnectionStatus().equals("disconnected"))
+        			 break;
+        		
+        		 Thread.yield();
+        	 }
+        		       /* Alternatively, busy-wait until the network input buffer is available */
         	 
         	 if (!objNetwork.getInBufferStatus().equals("empty"))
         	 {
@@ -233,7 +238,8 @@ public class Server extends Thread {
                             System.out.println("\n DEBUG : Server.processTransactions() - Obtaining balance from account" + trans.getAccountNumber());
         				 } 
         		        		 
-        		 // while( (objNetwork.getOutBufferStatus().equals("full"))); /* Alternatively,  busy-wait until the network output buffer is available */
+        		 while( (objNetwork.getOutBufferStatus().equals("full")))
+        			 Thread.yield();/* Alternatively,  busy-wait until the network output buffer is available */
                                                            
         		 System.out.println("\n DEBUG : Server.processTransactions() - transferring out account " + trans.getAccountNumber());
         		 
@@ -325,12 +331,13 @@ public class Server extends Thread {
 
         processTransactions(transaction);
         
-        objNetwork.setServerConnectionStatus("disconnected");
+        
         serverEndTime = System.currentTimeMillis();
         System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds"); 
        // objNetwork.disconnect(objNetwork.getServerIP());
         objNetwork.setServerConnectionStatus("disconnected");
+        
+        
            
     }
 }
-

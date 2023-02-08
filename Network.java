@@ -1,6 +1,4 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
+To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -554,16 +552,19 @@ public class Network extends Thread {
     {
     	System.out.println("\n DEBUG : Network.run() - starting network thread");
     	
-    	
-    	
-    	while(true) 
-    	{
-    		if(getClientConnectionStatus().equals("disconnected") || getServerConnectionStatus().equals("disconnected"))
+ 
+    		while(!getClientConnectionStatus().equals("disconnected") || !getServerConnectionStatus().equals("disconnected"))
+    		{
+    			
     			Thread.yield();
-    		else if(getClientConnectionStatus().equals("disconnected") && getServerConnectionStatus().equals("disconnected"))
+    		}
+    		if(getClientConnectionStatus().equals("disconnected") && getServerConnectionStatus().equals("disconnected"))
     		{
     			System.out.println("Terminating the network thread");
-    			break;
+    			
     		}
-    	}
+    
+    	
+    }
 }
+

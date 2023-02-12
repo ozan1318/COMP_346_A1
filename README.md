@@ -1,7 +1,7 @@
 # COMP_346_A1
 
 ## Students:
-- Kadir Altinay
+- Kadir Altinay 40166610
 - Ozan Alptekin 40162877
 
 ## Thread Running Times
